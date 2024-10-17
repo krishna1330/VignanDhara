@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using VignanDhara.Data;
 
@@ -23,12 +19,36 @@ namespace VignanDhara.Web.Books
 
         private void BindBookRequests()
         {
-
             BooksDAC booksDAC = new BooksDAC();
             var requests = booksDAC.GetBookRequests(conStr);
 
             gvBookRequests.DataSource = requests;
             gvBookRequests.DataBind();
+        }
+
+        protected void gvBookRequests_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Approve")
+            {
+                int bookRequestId = int.Parse(e.CommandArgument.ToString());
+
+                if (Session["UserId"] != null && Session["UserType"].ToString() == "1")
+                {
+                    int approvedBy = int.Parse(Session["UserId"].ToString());
+
+                    BooksDAC booksDAC = new BooksDAC();
+                    var isApproved = booksDAC.ApproveBookRequest(conStr, bookRequestId, approvedBy);
+
+                    if (isApproved)
+                    {
+                        BindBookRequests();
+                    }
+                }
+            }
+            else if (e.CommandName == "Reject")
+            {
+
+            }
         }
     }
 }

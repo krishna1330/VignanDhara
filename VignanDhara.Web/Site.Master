@@ -61,7 +61,11 @@
                             <asp:HyperLink runat="server" NavigateUrl="~/Books/MyBooks" Text="My Books" /></li>
                         <% } %>
 
+                        <% if (Session["UserType"] != null && (int)Session["UserType"] == 1)
+                            { %>
                         <li><a runat="server" href="~/Books/BookRequests">Book Requests</a></li>
+                        <% } %>
+
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
 
@@ -85,7 +89,7 @@
                             { %>
                         <li class="nav-item">
                             <a href="Login.aspx" class="nav-link">
-                                <i class="fas fa-user-circle"></i>Login
+                                <i class="fas fa-user-circle"></i>&nbsp;Login
                             </a>
                         </li>
                         <% } %>
@@ -96,10 +100,10 @@
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
+<%--            <hr />
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %> - Vignan Dhara</p>
-            </footer>
+            </footer>--%>
         </div>
     </form>
 

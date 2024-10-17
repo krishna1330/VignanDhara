@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using VignanDhara.Data;
 
@@ -18,7 +14,7 @@ namespace VignanDhara.Web.Books
         {
             if (!IsPostBack)
             {
-                int userId = 2;
+                int userId = 2; // Example user ID
                 LoadMyBooks(userId);
             }
         }
@@ -37,6 +33,27 @@ namespace VignanDhara.Web.Books
             {
                 gvMyBooks.DataSource = null;
                 gvMyBooks.DataBind();
+            }
+        }
+
+        protected void gvMyBooks_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Return")
+            {
+                int bookRequestId = int.Parse(e.CommandArgument.ToString());
+
+                if (Session["UserId"] != null && Session["UserType"].ToString() != "1")
+                {
+                    int requestedBy = int.Parse(Session["UserId"].ToString());
+
+                    BooksDAC booksDAC = new BooksDAC();
+                    var isRequested = booksDAC.RequestBookReturn(conStr, bookRequestId);
+
+                    if (isRequested)
+                    {
+                        LoadMyBooks(requestedBy);
+                    }
+                }
             }
         }
     }

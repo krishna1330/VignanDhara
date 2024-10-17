@@ -196,5 +196,70 @@ namespace VignanDhara.Data
 
             return bookRequestsTable;
         }
+
+        public bool ApproveBookRequest(string conStr, int bookRequestId, int approvedBy)
+        {
+            bool isSuccess = false;
+
+            using (SqlConnection conn = new SqlConnection(conStr))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("spApproveBookRequest", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@BookRequestId", SqlDbType.Int) { Value = bookRequestId });
+                        cmd.Parameters.Add(new SqlParameter("@ApprovedBy", SqlDbType.Int) { Value = approvedBy });
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        isSuccess = (rowsAffected > 0);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error approving book request: " + ex.Message);
+                }
+            }
+
+            return isSuccess;
+        }
+
+        public bool RequestBookReturn(string conStr,  int bookRequestId)
+        {
+            bool isSuccess = false;
+
+            using (SqlConnection conn = new SqlConnection(conStr))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("spRequestBookReturn", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@bookRequestId", bookRequestId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        isSuccess = (rowsAffected > 0);
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine("SQL Error: " + ex.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+
+            return isSuccess;
+        }
     }
 }
