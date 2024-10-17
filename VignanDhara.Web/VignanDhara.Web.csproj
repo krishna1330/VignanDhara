@@ -107,6 +107,8 @@
   <ItemGroup>
     <Content Include="Books\AddBook.aspx" />
     <Content Include="Books\AllBooks.aspx" />
+    <Content Include="Books\BookRequests.aspx" />
+    <Content Include="Books\MyBooks.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -177,6 +179,20 @@
     </Compile>
     <Compile Include="Books\AllBooks.aspx.designer.cs">
       <DependentUpon>AllBooks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Books\BookRequests.aspx.cs">
+      <DependentUpon>BookRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\BookRequests.aspx.designer.cs">
+      <DependentUpon>BookRequests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Books\MyBooks.aspx.cs">
+      <DependentUpon>MyBooks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\MyBooks.aspx.designer.cs">
+      <DependentUpon>MyBooks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

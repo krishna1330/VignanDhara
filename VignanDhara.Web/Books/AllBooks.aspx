@@ -8,7 +8,7 @@
             <asp:Label ID="lblResponse" runat="server" Style="margin-left: 150px;"></asp:Label>
         </div>
         <br />
-        <asp:GridView ID="gvBooks" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" OnRowCommand="gvBooks_RowCommand" OnRowEditing="gvBooks_RowEditing" OnSelectedIndexChanged="gvBooks_SelectedIndexChanged1">
+        <asp:GridView ID="gvBooks" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowCommand="gvBooks_RowCommand" OnRowEditing="gvBooks_RowEditing" OnSelectedIndexChanged="gvBooks_SelectedIndexChanged1">
             <Columns>
                 <asp:BoundField DataField="BookName" HeaderText="Book Name" />
                 <asp:BoundField DataField="Author" HeaderText="Author" />

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookRequests.cs" />
     <Compile Include="Books.cs" />
+    <Compile Include="BorrowedBooks.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

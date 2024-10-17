@@ -139,5 +139,62 @@ namespace VignanDhara.Data
 
             return resultMessage;
         }
+
+        public DataTable GetMyBooks(string conStr, int userId)
+        {
+            DataTable booksTable = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                using (SqlCommand command = new SqlCommand("spGetMyBooks", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@userId", userId);
+
+                    try
+                    {
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            booksTable.Load(reader);
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("SQL Error: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+            }
+
+            return booksTable;
+        }
+
+        public DataTable GetBookRequests(string conStr)
+        {
+            DataTable bookRequestsTable = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                using (SqlCommand command = new SqlCommand("spGetBookRequests", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(bookRequestsTable);
+                    }
+                }
+            }
+
+            return bookRequestsTable;
+        }
     }
 }
