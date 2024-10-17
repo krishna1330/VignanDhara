@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between mb-3">
             <h2>Books</h2>
             <asp:Button ID="btnAddBook" runat="server" CssClass="btn btn-primary" Text="Add Book" OnClick="btnAddBook_Click" />
-            <asp:Label ID="lblResponse" runat="server" style="margin-left: 150px;"></asp:Label>
+            <asp:Label ID="lblResponse" runat="server" Style="margin-left: 150px;"></asp:Label>
         </div>
         <br />
         <asp:GridView ID="gvBooks" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" OnRowCommand="gvBooks_RowCommand" OnRowEditing="gvBooks_RowEditing" OnSelectedIndexChanged="gvBooks_SelectedIndexChanged1">
@@ -24,6 +24,14 @@
                             CommandArgument='<%# Eval("BookId") %>'
                             CssClass="btn btn-danger btn-sm"
                             OnClientClick="return confirm('Are you sure you want to delete this book?');" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Request Book">
+                    <ItemTemplate>
+                        <asp:Button ID="btnRequestBook" runat="server" Text="Request Book" CommandName="Request Book"
+                            CommandArgument='<%# Eval("BookId") %>'
+                            CssClass="btn btn-primary btn-sm" />
                     </ItemTemplate>
                 </asp:TemplateField>
 

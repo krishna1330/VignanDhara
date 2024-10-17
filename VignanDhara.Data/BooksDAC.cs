@@ -111,5 +111,33 @@ namespace VignanDhara.Data
             return result;
         }
 
+        public string RequestBook(string conStr, int userId, int bookId)
+        {
+            string resultMessage;
+
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                using (SqlCommand command = new SqlCommand("spRequestBook", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@bookId", bookId);
+
+                    try
+                    {
+                        connection.Open();
+
+                        resultMessage = (string)command.ExecuteScalar();
+                    }
+                    catch (Exception ex)
+                    {
+                        resultMessage = "Error: " + ex.Message;
+                    }
+                }
+            }
+
+            return resultMessage;
+        }
     }
 }

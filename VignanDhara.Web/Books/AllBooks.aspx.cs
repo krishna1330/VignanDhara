@@ -14,7 +14,7 @@ namespace VignanDhara.Web.Books
                 if (Session["lblResponse"] != null)
                 {
                     lblResponse.Text = Session["lblResponse"].ToString();
-                    lblResponse.ForeColor = System.Drawing.Color.Red;
+                    lblResponse.ForeColor = System.Drawing.Color.Green;
 
                     string script = @"<script type='text/javascript'>
                                 setTimeout(function() {
@@ -23,18 +23,20 @@ namespace VignanDhara.Web.Books
                               </script>";
                     ClientScript.RegisterStartupScript(this.GetType(), "HideLabelScript", script);
 
-                    Session["lblResponse"] = null; // Clear session message after displaying it
+                    Session["lblResponse"] = null;
                 }
 
-                if (Session["UserId"] != null && Session["UserId"].ToString() == "1")
+                if (Session["UserType"] != null && Session["UserType"].ToString() == "1")
                 {
                     btnAddBook.Visible = true;
                     gvBooks.Columns[GetColumnIndexByHeaderText("Actions")].Visible = true;
+                    gvBooks.Columns[GetColumnIndexByHeaderText("Request Book")].Visible = false;
                 }
                 else
                 {
                     btnAddBook.Visible = false;
                     gvBooks.Columns[GetColumnIndexByHeaderText("Actions")].Visible = false;
+                    gvBooks.Columns[GetColumnIndexByHeaderText("Request Book")].Visible = true;
                 }
 
                 LoadBooks();
@@ -72,10 +74,6 @@ namespace VignanDhara.Web.Books
             }
         }
 
-        protected void gvBooks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         protected void gvBooks_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -103,6 +101,25 @@ namespace VignanDhara.Web.Books
                 }
 
                 Response.Redirect("AllBooks.aspx");
+            }
+
+            else if (e.CommandName == "Request Book")
+            {
+                int bookId = int.Parse(e.CommandArgument.ToString());
+
+                if (Session["UserId"] != null && Session["UserType"].ToString() != "1")
+                {
+                    int requestedBy = int.Parse(Session["UserId"].ToString());
+
+                    string conStr = ConfigurationManager.ConnectionStrings["SQLConnection"].ConnectionString;
+
+                    BooksDAC booksDAC = new BooksDAC();
+                    var res = booksDAC.RequestBook(conStr, requestedBy, bookId);
+
+                    Session["lblResponse"] = res;
+
+                    Response.Redirect("AllBooks.aspx");
+                }
             }
         }
 
