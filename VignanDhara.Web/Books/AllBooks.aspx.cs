@@ -11,6 +11,21 @@ namespace VignanDhara.Web.Books
         {
             if (!IsPostBack)
             {
+                if (Session["lblResponse"] != null)
+                {
+                    lblResponse.Text = Session["lblResponse"].ToString();
+                    lblResponse.ForeColor = System.Drawing.Color.Red;
+
+                    string script = @"<script type='text/javascript'>
+                                setTimeout(function() {
+                                    document.getElementById('" + lblResponse.ClientID + @"').style.display = 'none';
+                                }, 2000);
+                              </script>";
+                    ClientScript.RegisterStartupScript(this.GetType(), "HideLabelScript", script);
+
+                    Session["lblResponse"] = null; // Clear session message after displaying it
+                }
+
                 if (Session["UserId"] != null && Session["UserId"].ToString() == "1")
                 {
                     btnAddBook.Visible = true;
@@ -21,6 +36,7 @@ namespace VignanDhara.Web.Books
                     btnAddBook.Visible = false;
                     gvBooks.Columns[GetColumnIndexByHeaderText("Actions")].Visible = false;
                 }
+
                 LoadBooks();
             }
         }
@@ -78,12 +94,17 @@ namespace VignanDhara.Web.Books
 
                     if (isDeleted == 1)
                     {
-                        Response.Redirect("AllBooks.aspx");
+                        Session["lblResponse"] = "Book deleted successfully.";
+                    }
+                    else
+                    {
+                        Session["lblResponse"] = "Unable to delete the book.";
                     }
                 }
+
+                Response.Redirect("AllBooks.aspx");
             }
         }
-
 
         protected void gvBooks_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -94,5 +115,9 @@ namespace VignanDhara.Web.Books
             LoadBooks();
         }
 
+        protected void gvBooks_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -44,5 +44,24 @@ namespace VignanDhara.Web
                 lblError.Text = "Invalid credentials.";
             }
         }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            // Clear all session data
+            Session.Clear();   // Clears all session values
+            Session.Abandon(); // Ends the session
+
+            // Optionally, clear authentication cookies if using forms authentication
+            if (Request.Cookies[".ASPXAUTH"] != null)
+            {
+                HttpCookie authCookie = new HttpCookie(".ASPXAUTH");
+                authCookie.Expires = DateTime.Now.AddDays(-1d); // Expire the cookie
+                Response.Cookies.Add(authCookie);
+            }
+
+            // Redirect to the login page or homepage after logout
+            Response.Redirect("~/Login.aspx"); // Replace with your login page
+        }
+
     }
 }

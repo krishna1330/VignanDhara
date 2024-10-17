@@ -5,9 +5,10 @@
         <div class="d-flex justify-content-between mb-3">
             <h2>Books</h2>
             <asp:Button ID="btnAddBook" runat="server" CssClass="btn btn-primary" Text="Add Book" OnClick="btnAddBook_Click" />
+            <asp:Label ID="lblResponse" runat="server" style="margin-left: 150px;"></asp:Label>
         </div>
         <br />
-        <asp:GridView ID="gvBooks" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" OnRowCommand="gvBooks_RowCommand" OnRowEditing="gvBooks_RowEditing">
+        <asp:GridView ID="gvBooks" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" OnRowCommand="gvBooks_RowCommand" OnRowEditing="gvBooks_RowEditing" OnSelectedIndexChanged="gvBooks_SelectedIndexChanged1">
             <Columns>
                 <asp:BoundField DataField="BookName" HeaderText="Book Name" />
                 <asp:BoundField DataField="Author" HeaderText="Author" />

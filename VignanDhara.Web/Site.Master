@@ -67,19 +67,20 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Profile</a></li>
-                                <li><a href="#">Logout</a></li>
+                                <li>
+                                    <asp:LinkButton ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" CssClass="btn-logout"></asp:LinkButton>
+                                </li>
                             </ul>
                         </li>
                         <% }
-                        else
-                        { %>
+                            else
+                            { %>
                         <li class="nav-item">
                             <a href="Login.aspx" class="nav-link">
                                 <i class="fas fa-user-circle"></i> Login
                             </a>
                         </li>
                         <% } %>
-
                     </ul>
                 </div>
             </div>

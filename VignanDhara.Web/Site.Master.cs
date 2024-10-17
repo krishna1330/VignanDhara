@@ -13,5 +13,20 @@ namespace VignanDhara.Web
         {
 
         }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+
+            if (Request.Cookies[".ASPXAUTH"] != null)
+            {
+                HttpCookie authCookie = new HttpCookie(".ASPXAUTH");
+                authCookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(authCookie);
+            }
+
+            Response.Redirect("~/Login.aspx");
+        }
     }
 }
